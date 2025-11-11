@@ -38,7 +38,7 @@ char d1;        // Input from lab PC
 
 
 // Environmental Set Values
-const float SET_TEMP = 27; // Original 37
+const float SET_TEMP = 30; // Original 37
 const float SET_HUMIDITY = 40; // Original 90
 // const float SET_PERCENTAGE = 5.25;
 // const float SET_VOLTAGE = 0.7;
@@ -88,7 +88,8 @@ void setup() {
   pinMode(ATOMIZER_PIN, OUTPUT);
   digitalWrite(HEATER_PIN, LOW);
   // digitalWrite(SOLENOID_PIN, LOW);
-  digitalWrite(ATOMIZER_PIN, LOW);
+  // digitalWrite(ATOMIZER_PIN, LOW); // Default is low
+  digitalWrite(ATOMIZER_PIN, HIGH); // Default is high
 
   // // Initialize Temp and humidity sensor
   // dht.begin();
@@ -227,9 +228,12 @@ void loop() {
     if(atomizerStandby == false){ // If the atomizer is not standby, controlled by "C"
       if(atomizer){// Humidifier is on
         if(humidity >= SET_HUMIDITY){ // Humidifier is on & humidity exceeds threshold, turn humidifier off
+          // digitalWrite(ATOMIZER_PIN, HIGH); // Default is low
+          // delay(1000);
+          // digitalWrite(ATOMIZER_PIN, LOW); 
+          digitalWrite(ATOMIZER_PIN, LOW); // Default is high
+          delay(100);
           digitalWrite(ATOMIZER_PIN, HIGH); 
-          delay(10);
-          digitalWrite(ATOMIZER_PIN, LOW); 
           atomizer = false;
         }
       }
@@ -240,9 +244,12 @@ void loop() {
       // }
       else{ // Humidifier is off
         if(humidity < (SET_HUMIDITY)){ // Humidifier is on & humidity is not yet at threshold, turn humidifier on
+          // digitalWrite(ATOMIZER_PIN, HIGH); // Default is low
+          // delay(1000);
+          // digitalWrite(ATOMIZER_PIN, LOW); 
+          digitalWrite(ATOMIZER_PIN, LOW); // Default is high
+          delay(100);
           digitalWrite(ATOMIZER_PIN, HIGH); 
-          delay(10);
-          digitalWrite(ATOMIZER_PIN, LOW); 
           atomizer = true;
         }
 
@@ -250,12 +257,16 @@ void loop() {
     }
     else{ // If the atomizer is standby, controlled by "c"
       if(atomizer){
-        digitalWrite(ATOMIZER_PIN, HIGH); 
-        delay(10);
-        digitalWrite(ATOMIZER_PIN, LOW); 
+        // digitalWrite(ATOMIZER_PIN, HIGH); // Default is low
+        // delay(1000);
+        // digitalWrite(ATOMIZER_PIN, LOW); 
+          digitalWrite(ATOMIZER_PIN, LOW); // Default is high
+          delay(100);
+          digitalWrite(ATOMIZER_PIN, HIGH); 
       }
       else{
-        digitalWrite(ATOMIZER_PIN, LOW);
+        // digitalWrite(ATOMIZER_PIN, LOW); // Default is low
+        digitalWrite(ATOMIZER_PIN, HIGH); // Default is high
       }
       atomizer = false;
     }
